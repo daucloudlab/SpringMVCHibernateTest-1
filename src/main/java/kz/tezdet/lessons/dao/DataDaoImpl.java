@@ -19,7 +19,7 @@ public class DataDaoImpl implements DataDao{
     public int insertRow(Employee employee) {
         Session session = sessionFactory.openSession() ;
         Transaction tx = session.beginTransaction() ;
-        session.saveOrUpdate(employee);
+        session.save(employee);
         tx.commit();
         Serializable id = session.getIdentifier(employee) ;
         session.close() ;
@@ -37,7 +37,7 @@ public class DataDaoImpl implements DataDao{
     @Override
     public Employee getRowById(int id) {
         Session session = sessionFactory.openSession() ;
-        Employee employee = (Employee)session.load(Employee.class, id) ;
+        Employee employee = (Employee)session.get(Employee.class, id) ;
 
         return employee;
     }

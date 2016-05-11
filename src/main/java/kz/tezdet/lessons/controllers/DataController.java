@@ -47,7 +47,7 @@ public class DataController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public ModelAndView updateUser(@ModelAttribute Employee employee) {
+    public ModelAndView updateUser(@ModelAttribute("employee") Employee employee) {
         dataService.updateRow(employee);
         return new ModelAndView("redirect:list");
     }
