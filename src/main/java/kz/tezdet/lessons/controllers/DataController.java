@@ -4,6 +4,7 @@ import kz.tezdet.lessons.models.Employee;
 import kz.tezdet.lessons.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +19,11 @@ public class DataController {
     DataService dataService ;
 
     @RequestMapping(value = "form", method = RequestMethod.GET)
-    public ModelAndView getForm(@ModelAttribute Employee employee){
+    public ModelAndView getForm(@ModelAttribute("employee") Employee employee){
         return new ModelAndView("form") ;
     }
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute Employee employee) {
+    public ModelAndView registerUser(@ModelAttribute("employee") Employee employee) {
         dataService.insertRow(employee);
         return new ModelAndView("redirect:list");
     }
@@ -41,14 +42,17 @@ public class DataController {
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public ModelAndView editUser(@RequestParam int id,
-                                 @ModelAttribute Employee employee) {
+                                 @ModelAttribute("employee") Employee employee) {
         Employee employeeObject = dataService.getRowById(id);
+        System.out.println(employee.getId());
+
         return new ModelAndView("edit", "employeeObject", employeeObject);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ModelAndView updateUser(@ModelAttribute("employee") Employee employee) {
         dataService.updateRow(employee);
+        System.out.println(employee.getId());
         return new ModelAndView("redirect:list");
     }
 }
